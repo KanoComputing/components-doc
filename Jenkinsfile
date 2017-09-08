@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-        stringParam(defaultValue: '', description: 'Repo from which the component should be imported', name: 'repoUrl')
-        stringParam(defaultValue: '', description: 'Name of the component', name: 'componentName')
+        text(defaultValue: '', description: 'Repo from which the component should be imported', name: 'repoUrl')
+        text(defaultValue: '', description: 'Name of the component', name: 'componentName')
     }
 
     stages {
