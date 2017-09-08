@@ -12,8 +12,8 @@ pipeline {
                 script {
                     sh "npm i"
                     sh "bower i"
-                    sh "mkdirp ./elements"
-                    sh "mkdirp ./analysis"
+                    sh "mkdir -p ./elements"
+                    sh "mkdir -p ./analysis"
                     sh "./fetch-element.sh ${params.repoUrl} ${params.componentName}"
                     sh "./generate-doc.sh"
                     sh "aws s3 sync elements s3://components.kano.me/elements --region eu-west-1 --only-show-errors"
