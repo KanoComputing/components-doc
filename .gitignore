@@ -1,0 +1,6 @@
+.DS_Store
+analysis
+analysis.json
+elements
+node_modules
+bower_components

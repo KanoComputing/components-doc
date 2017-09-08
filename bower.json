@@ -1,0 +1,24 @@
+{
+  "name": "components-doc",
+  "authors": [
+    "Paul Varache <perso@paulvarache.ninja>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.1"
+  },
+  "resolutions": {
+    "polymer": "^1.9.0",
+    "webcomponentsjs": "^v1.0.2"
+  }
+}
