@@ -19,11 +19,11 @@ pipeline {
                     sh "aws s3 sync s3://components.kano.me/analysis analysis --region eu-west-1 --only-show-errors || mkdir -p ./analysis"
                     sh "./fetch-element.sh ${params.repoUrl} ${params.componentName}"
                     sh "./generate-doc.sh"
-                    sh "aws s3 sync elements s3://components.kano.me/elements --region eu-west-1 --only-show-errors"
-                    sh "aws s3 sync analysis s3://components.kano.me/analysis --region eu-west-1 --only-show-errors"
-                    sh "aws s3 cp analysis.json s3://components.kano.me/analysis.json --region eu-west-1 --only-show-errors"
-                    sh "aws s3 cp index.html s3://components.kano.me/index.html --region eu-west-1 --only-show-errors"
-                    sh "aws s3 sync bower_components s3://components.kano.me/bower_components --region eu-west-1 --only-show-errors"
+                    sh "polymer build"
+                    sh "cp analysis.json ./build/default/analysis.json"
+                    sh "cp -r ./elements ./build/default/elements"
+                    sh "cp -r ./analysis ./build/default/analysis"
+                    sh "aws s3 sync build/default s3://components.kano.me --region eu-west-1 --only-show-errors"
                 }
             }
         }
