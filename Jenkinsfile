@@ -12,6 +12,8 @@ pipeline {
                 script {
                     sh "npm i"
                     sh "bower i"
+                    // Delete element folder if existing
+                    sh "rm -rf ./elements/${params.componentName}"
                     sh "mkdir -p ./elements"
                     // get the remote previous analysis or create the folder
                     sh "aws s3 sync s3://components.kano.me/analysis analysis --region eu-west-1 --only-show-errors || mkdir -p ./analysis"
