@@ -19,7 +19,7 @@ pipeline {
                     sh "aws s3 sync s3://components.kano.me/analysis analysis --region eu-west-1 --only-show-errors || mkdir -p ./analysis"
                     sh "./fetch-element.sh ${params.repoUrl} ${params.componentName}"
                     sh "./generate-doc.sh"
-                    sh "polymer build"
+                    sh "polymer build --bundle --html-minify --js-minify --css-minify"
                     sh "cp analysis.json ./build/default/analysis.json"
                     sh "cp -r ./elements ./build/default/elements"
                     sh "cp -r ./analysis ./build/default/analysis"
