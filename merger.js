@@ -16,7 +16,10 @@ class DocMerger {
         } else if (this.analysis.schema_version !== analysis.schema_version) {
             throw new Error('The schema version of all the analysis are not the same');
         }
-        return this.analysis.elements = this.analysis.elements.concat(analysis.elements);
+        return this.analysis.elements = this.analysis.elements
+                                            .concat(analysis.elements)
+                                            // Removes unexisting static analysis
+                                            .filter(element => !!element);
     }
     getAnalysis () {
         return this.analysis;
