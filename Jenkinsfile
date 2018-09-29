@@ -22,8 +22,9 @@ pipeline {
         stage('main') {
             steps {
                 script {
-                    def upstream = currentBuild.rawBuild.getParent();
-                    print upstream.SCMs[0].getRepositories()[0].getURIs()[0];
+                    def upstream = currentBuild.rawBuild.getParent()
+                    print upstream.getDisplayName()
+                    print upstream.SCMs[0].getRepositories()[0].getURIs()[0]
                     sh "yarn"
                     // Delete element folder if existing
                     sh "rm -rf ./elements/${params.componentName}"
