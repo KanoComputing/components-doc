@@ -22,6 +22,7 @@ pipeline {
         stage('main') {
             steps {
                 script {
+                    def build = Thread.currentThread().executable;
                     def upstream = build.getParent();
                     print upstream
                     sh "yarn"
