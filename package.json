@@ -4,11 +4,13 @@
   "description": "",
   "main": "merger-cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "polymer build --bundle --html-minify --js-minify --css-minify"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@polymer/iron-component-page": "^4.0.1",
+    "polymer-cli": "^1.8.0",
     "util.promisify": "^1.0.0",
     "yargs": "^8.0.2"
   }
