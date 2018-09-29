@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // get action first
-                    def action = currentBuild.getAction(hudson.model.CauseAction.class)
+                    def action = currentBuild.rawBuild.getAction(hudson.model.CauseAction.class)
                     // another way to find specific UpsteamCause directly
                     def cause = action.findCause(hudson.model.Cause.UpstreamCause.class)
                     def project = cause.getUpstreamProject()
