@@ -2,12 +2,6 @@ pipeline {
     agent {
         label 'ubuntu_18.04'
     }
-
-    // parameters {
-    //     text(defaultValue: '', description: 'Repo from which the component should be imported', name: 'repoUrl')
-    //     text(defaultValue: '', description: 'Name of the component', name: 'componentName')
-    // }
-
     stages {
         stage('tools') {
             steps {
@@ -28,22 +22,27 @@ pipeline {
                     def cause = action.findCause(hudson.model.Cause.UpstreamCause.class)
                     def project = cause.getUpstreamProject()
                     def (org, name, branch) = project.tokenize('/')
-                    print org
-                    print name
-                    print branch
+
+                    action = null
+                    cause = null
+                    project = null
+
+                    def url = "https://github.com/${org}/${name}"
                     sh "yarn"
                     // Delete element folder if existing
-                    sh "rm -rf ./elements/${params.componentName}"
+                    sh "rm -rf ./elements/${name}"
                     sh "mkdir -p ./elements"
                     // get the remote previous analysis or create the folder
                     sh "aws s3 sync s3://components.kano.me/analysis analysis --region eu-west-1 --only-show-errors || mkdir -p ./analysis"
-                    sh "./fetch-element.sh ${params.repoUrl} ${params.componentName}"
+                    sh "./fetch-element.sh ${url} ${name}"
                     sh "./generate-doc.sh"
                     sh "yarn build"
                     sh "cp analysis.json ./build/default/analysis.json"
                     sh "cp -r ./elements ./build/default/elements"
                     sh "cp -r ./analysis ./build/default/analysis"
-                    sh "aws s3 sync build/default s3://components.kano.me --region eu-west-1 --only-show-errors"
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'kart']]) {
+                        sh "aws s3 sync build/default s3://components.kano.me --region eu-west-1 --only-show-errors"
+                    }
                 }
             }
         }
