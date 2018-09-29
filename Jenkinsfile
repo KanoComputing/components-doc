@@ -22,8 +22,7 @@ pipeline {
         stage('main') {
             steps {
                 script {
-                    def build = Thread.currentThread().executable;
-                    def upstream = build.getParent();
+                    def upstream = currentBuil.getParent();
                     print upstream
                     sh "yarn"
                     // Delete element folder if existing
