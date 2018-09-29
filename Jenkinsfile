@@ -22,7 +22,7 @@ pipeline {
         stage('main') {
             steps {
                 script {
-                    def upstream = currentBuil.getParent();
+                    def upstream = currentBuild.getParent();
                     print upstream
                     sh "yarn"
                     // Delete element folder if existing
