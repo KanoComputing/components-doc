@@ -22,7 +22,7 @@ pipeline {
         stage('main') {
             steps {
                 script {
-                    def upstream = currentBuild.rawBuild.getParent().getParent()
+                    def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
                     print upstream.getDisplayName()
                     print upstream.SCMs[0].getRepositories()[0].getURIs()[0]
                     sh "yarn"
