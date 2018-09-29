@@ -22,9 +22,15 @@ pipeline {
         stage('main') {
             steps {
                 script {
-                    def upstream = currentBuild.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
-                    print upstream.getDisplayName()
-                    print upstream.SCMs[0].getRepositories()[0].getURIs()[0]
+                    // get action first
+                    def action = currentBuild.getAction(hudson.model.CauseAction.class)
+                    // another way to find specific UpsteamCause directly
+                    def cause = action.findCause(hudson.model.Cause.UpstreamCause.class)
+                    def project = cause.getUpstreamProject()
+                    def (org, name, branch) = project.tokenize('/')
+                    print org
+                    print name
+                    print branch
                     sh "yarn"
                     // Delete element folder if existing
                     sh "rm -rf ./elements/${params.componentName}"
